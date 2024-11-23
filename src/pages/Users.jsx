@@ -1,30 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const UsersPage = ({ info, roles }) => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      role: "Admin",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      email: "jane@example.com",
-      role: "User",
-      status: "Inactive",
-    },
-    {
-      id: 3,
-      name: "Alice Johnson",
-      email: "alice@example.com",
-      role: "Manager",
-      status: "Active",
-    },
-  ]);
-
+const UsersPage = ({ users, setUsers, roles }) => {
   const [showViewModal, setShowViewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -39,25 +15,35 @@ const UsersPage = ({ info, roles }) => {
   const [appendedUserIds, setAppendedUserIds] = useState(new Set());
 
   useEffect(() => {
-    if (info && info.length) {
-      const newUsers = info
-        .filter((userInfo) => !appendedUserIds.has(userInfo.id))
-        .map((userInfo) => ({
-          id: userInfo.id,
-          name: userInfo.name,
-          email: userInfo.email,
-          role: userInfo.roleName,
-          status: "Active",
-        }));
+    if (users && users.length) {
+      const uniqueUsers = users.filter(
+        (user, index, self) => index === self.findIndex((u) => u.id === user.id)
+      );
+
+      const newUsers = uniqueUsers.filter(
+        (user) => !appendedUserIds.has(user.id)
+      );
 
       if (newUsers.length) {
-        setUsers((prevUsers) => [...prevUsers, ...newUsers]);
-        setAppendedUserIds(
-          (prevIds) => new Set([...prevIds, ...newUsers.map((user) => user.id)])
-        );
+        setUsers((prevUsers) => [
+          ...prevUsers,
+          ...newUsers.map((user) => ({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.roleName,
+            status: "Active",
+          })),
+        ]);
+
+        setAppendedUserIds((prevIds) => {
+          const updatedSet = new Set(prevIds);
+          newUsers.forEach((user) => updatedSet.add(user.id));
+          return updatedSet;
+        });
       }
     }
-  }, [info]);
+  }, [users]);
 
   const handleViewUser = (user) => {
     setSelectedUser(user);
@@ -251,11 +237,12 @@ const UsersPage = ({ info, roles }) => {
                       required
                     />
                   </div>
+                  {/* yaha change karna hai */}
                   <div className="mb-4">
                     <label className="block text-gray-700 font-semibold">
                       Role
                     </label>
-                    <input
+                    <select
                       type="text"
                       value={selectedUser.role}
                       onChange={(e) =>
@@ -266,7 +253,16 @@ const UsersPage = ({ info, roles }) => {
                       }
                       className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                       required
-                    />
+                    >
+                      <option value="" disabled>
+                        Select a role
+                      </option>
+                      {roles.map((role) => (
+                        <option key={role.id} value={role.name}>
+                          {role.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className="mb-4">
                     <label className="block text-gray-700 font-semibold">
@@ -355,6 +351,9 @@ const UsersPage = ({ info, roles }) => {
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                   >
+                    <option value="" disabled>
+                      Select a role
+                    </option>
                     {roles.map((role) => (
                       <option key={role.id} value={role.name}>
                         {role.name}

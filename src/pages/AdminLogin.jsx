@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
-const AdminLogin = ({ admin }) => {
+const AdminLogin = ({ admin, login, setLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -21,6 +21,7 @@ const AdminLogin = ({ admin }) => {
     );
 
     if (user) {
+      setLogin(true);
       navigate("/dashboard");
     } else {
       setError(true);

@@ -8,7 +8,7 @@ import Users from "./pages/Users";
 import AdminLogin from "./pages/AdminLogin";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import RequestPanel from "./pages/RequestPanel";
 function App() {
   const [users, setUsers] = useState([]);
   const [login, setLogin] = useState(false);
@@ -19,7 +19,11 @@ function App() {
     },
   ];
   const [roles, setRoles] = useState([]);
-
+  const [requests, setRequests] = useState([
+    { id: 1, username: "Alice", email: "alice@example.com", role: "Admin" },
+    { id: 2, username: "Bob", email: "bob@example.com", role: "Moderator" },
+    { id: 3, username: "Charlie", email: "charlie@example.com", role: "User" },
+  ]);
   return (
     <>
       <Header login={login} setLogin={setLogin} />
@@ -32,7 +36,9 @@ function App() {
         />
         <Route
           path="dashboard"
-          element={<Dashboard roles={roles} users={users} />}
+          element={
+            <Dashboard roles={roles} users={users} requests={requests} />
+          }
         />
         <Route
           path="admin"
@@ -41,6 +47,12 @@ function App() {
         <Route
           path="users"
           element={<Users users={users} setUsers={setUsers} roles={roles} />}
+        />
+        <Route
+          path="requestpanel"
+          element={
+            <RequestPanel requests={requests} setRequests={setRequests} />
+          }
         />
       </Routes>
     </>

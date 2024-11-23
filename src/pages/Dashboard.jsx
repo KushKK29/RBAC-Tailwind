@@ -6,7 +6,7 @@ import image1 from "../assets/image1.png";
 import image2 from "../assets/image2.png";
 import image3 from "../assets/image3.png";
 
-const Dashboard = ({ roles, users }) => {
+const Dashboard = ({ roles, users, requests }) => {
   // Settings for the slick carousel
   const sliderSettings = {
     dots: true,
@@ -37,24 +37,24 @@ const Dashboard = ({ roles, users }) => {
 
       {/* 3D Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="group relative bg-gradient-to-r from-purple-400 via-pink-500 to-red-400 p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+        <div className="group relative bg-blue-500  p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
           <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-lg transition"></div>
           <h3 className="text-2xl font-semibold text-white">Total Users</h3>
           <p className="text-lg text-white mt-2">{users.length}</p>
         </div>
 
-        <div className="group relative bg-gradient-to-r from-green-400 via-teal-500 to-blue-400 p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+        <div className="group relative bg-blue-500 p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
           <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-lg transition"></div>
           <h3 className="text-2xl font-semibold text-white">Active Roles</h3>
           <p className="text-lg text-white mt-2">{roles.length}</p>
         </div>
 
-        <div className="group relative bg-gradient-to-r from-yellow-400 via-orange-500 to-red-400 p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
+        <div className="group relative bg-blue-500 p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105">
           <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 rounded-lg transition"></div>
           <h3 className="text-2xl font-semibold text-white">
             Pending Requests
           </h3>
-          <p className="text-lg text-white mt-2">10 Requests</p>
+          <p className="text-lg text-white mt-2">{requests.length}</p>
         </div>
       </div>
 

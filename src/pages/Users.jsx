@@ -12,38 +12,32 @@ const UsersPage = ({ users, setUsers, roles }) => {
     status: "Active",
   });
 
-  const [appendedUserIds, setAppendedUserIds] = useState(new Set());
+ 
 
   useEffect(() => {
     if (users && users.length) {
-      const uniqueUsers = users.filter(
-        (user, index, self) => index === self.findIndex((u) => u.id === user.id)
+
+      const uniqueUsers = Array.from(
+        new Map(
+          users.map((user) => [
+            user.id,
+            {
+              id: user.id,
+              name: user.name,
+              email: user.email,
+              role: user.roleName || user.role,
+              status: user.status || "Active",
+            },
+          ])
+        ).values()
       );
 
-      const newUsers = uniqueUsers.filter(
-        (user) => !appendedUserIds.has(user.id)
-      );
-
-      if (newUsers.length) {
-        setUsers((prevUsers) => [
-          ...prevUsers,
-          ...newUsers.map((user) => ({
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            role: user.roleName,
-            status: "Active",
-          })),
-        ]);
-
-        setAppendedUserIds((prevIds) => {
-          const updatedSet = new Set(prevIds);
-          newUsers.forEach((user) => updatedSet.add(user.id));
-          return updatedSet;
-        });
+      
+      if (JSON.stringify(uniqueUsers) !== JSON.stringify(users)) {
+        setUsers(uniqueUsers);
       }
     }
-  }, [users]);
+  }, [users, setUsers]);
 
   const handleViewUser = (user) => {
     setSelectedUser(user);
@@ -58,11 +52,6 @@ const UsersPage = ({ users, setUsers, roles }) => {
   const handleDeleteUser = (userId) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
-      setAppendedUserIds((prevIds) => {
-        const updatedIds = new Set(prevIds);
-        updatedIds.delete(userId);
-        return updatedIds;
-      });
     }
   };
 
@@ -77,12 +66,12 @@ const UsersPage = ({ users, setUsers, roles }) => {
 
   const handleAddUser = (e) => {
     e.preventDefault();
+    const maxId = Math.max(...users.map((user) => user.id), 0);
     const newUserWithId = {
       ...newUser,
-      id: users.length + 1, // Generate a new ID
+      id: maxId + 1, 
     };
     setUsers((prevUsers) => [...prevUsers, newUserWithId]);
-    setAppendedUserIds((prevIds) => new Set([...prevIds, newUserWithId.id]));
     setShowAddModal(false);
     setNewUser({
       name: "",
@@ -91,7 +80,6 @@ const UsersPage = ({ users, setUsers, roles }) => {
       status: "Active",
     });
   };
-
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <div className="max-w-6xl mx-auto">

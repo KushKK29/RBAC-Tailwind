@@ -9,7 +9,7 @@ function Header({ login, setLogin }) {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-blue-500 to-teal-500 shadow-lg sticky top-0 z-50">
+    <nav className="bg-blue-600  shadow-lg sticky top-0 z-50">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         {/* Brand */}
         <NavLink
@@ -70,6 +70,15 @@ function Header({ login, setLogin }) {
               Users
             </NavLink>
           )}
+
+          {login && (
+            <NavLink
+              to="/requestpanel"
+              className="text-lg text-white hover:text-yellow-300 transition-all duration-300 ease-in-out"
+            >
+              Request Panel
+            </NavLink>
+          )}
         </div>
 
         {/* Admin Login Button */}
@@ -119,6 +128,14 @@ function Header({ login, setLogin }) {
               className="text-xl text-white hover:text-yellow-300 transition-all duration-300 ease-in-out"
             >
               Users
+            </NavLink>
+          )}
+          {login && (
+            <NavLink
+              to="/requestpanel"
+              className="text-xl text-white hover:text-yellow-300 transition-all duration-300 ease-in-out"
+            >
+              Request Panel
             </NavLink>
           )}
           {login === false ? (

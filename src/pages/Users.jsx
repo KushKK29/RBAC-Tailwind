@@ -12,11 +12,8 @@ const UsersPage = ({ users, setUsers, roles }) => {
     status: "Active",
   });
 
- 
-
   useEffect(() => {
     if (users && users.length) {
-
       const uniqueUsers = Array.from(
         new Map(
           users.map((user) => [
@@ -32,7 +29,6 @@ const UsersPage = ({ users, setUsers, roles }) => {
         ).values()
       );
 
-      
       if (JSON.stringify(uniqueUsers) !== JSON.stringify(users)) {
         setUsers(uniqueUsers);
       }
@@ -69,7 +65,7 @@ const UsersPage = ({ users, setUsers, roles }) => {
     const maxId = Math.max(...users.map((user) => user.id), 0);
     const newUserWithId = {
       ...newUser,
-      id: maxId + 1, 
+      id: maxId + 1,
     };
     setUsers((prevUsers) => [...prevUsers, newUserWithId]);
     setShowAddModal(false);

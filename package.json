@@ -1,9 +1,9 @@
 {
+  "homepage": "https://KushKK29.github.io/RBAC-Tailwind",
   "name": "rbac",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://kushkk29.github.io/RBAC-Tailwind",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

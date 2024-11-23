@@ -1,0 +1,113 @@
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+
+function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for toggling mobile menu
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  return (
+    <nav className="bg-gradient-to-r from-blue-500 to-teal-500 shadow-lg sticky top-0 z-50">
+      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+        {/* Brand */}
+        <a
+          href="#home"
+          className="text-3xl font-bold text-white hover:text-yellow-300 transition-colors"
+        >
+          RBAC
+        </a>
+
+        {/* Hamburger Button (for mobile) */}
+        <div className="lg:hidden">
+          <button
+            aria-controls="basic-navbar-nav"
+            onClick={toggleMenu} // Toggle mobile menu
+            className="text-white focus:outline-none"
+          >
+            {/* Hamburger icon */}
+            <svg
+              className="w-7 h-7"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+        </div>
+
+        {/* Navbar Links for Desktop */}
+        <div className="hidden lg:flex space-x-8">
+          <NavLink
+            to="/dashboard"
+            className="text-lg text-white hover:text-yellow-300 transition-all duration-300 ease-in-out"
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/admin"
+            className="text-lg text-white hover:text-yellow-300 transition-all duration-300 ease-in-out"
+          >
+            Admin Panel
+          </NavLink>
+          <NavLink
+            to="/users"
+            className="text-lg text-white hover:text-yellow-300 transition-all duration-300 ease-in-out"
+          >
+            Users
+          </NavLink>
+        </div>
+
+        {/* Admin Login Button */}
+        <div className="hidden lg:block">
+          <NavLink
+            to="/"
+            className="bg-yellow-500 text-white py-2 px-6 rounded-full hover:bg-yellow-400 transition-all duration-300 ease-in-out"
+          >
+            Admin Login
+          </NavLink>
+        </div>
+      </div>
+
+      {/* Mobile Navbar (hidden on large screens) */}
+      <div className={`lg:hidden mt-4 ${isMenuOpen ? "block" : "hidden"}`}>
+        <div className="flex flex-col space-y-6 bg-teal-600 p-4 rounded-lg shadow-xl">
+          <NavLink
+            to="/dashboard"
+            className="text-xl text-white hover:text-yellow-300 transition-all duration-300 ease-in-out"
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/admin"
+            className="text-xl text-white hover:text-yellow-300 transition-all duration-300 ease-in-out"
+          >
+            Admin Panel
+          </NavLink>
+          <NavLink
+            to="/users"
+            className="text-xl text-white hover:text-yellow-300 transition-all duration-300 ease-in-out"
+          >
+            Users
+          </NavLink>
+          <NavLink
+            to="/"
+            className="bg-yellow-500 text-white py-2 px-6 rounded-full hover:bg-yellow-400 transition-all duration-300 ease-in-out"
+          >
+            Admin Login
+          </NavLink>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+export default Header;

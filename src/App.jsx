@@ -63,7 +63,7 @@ function App() {
       <Header login={login} setLogin={setLogin} />
       <Routes>
         <Route
-          path="/RBAC-Tailwind/"
+          path="/"
           element={
             <AdminLogin admin={admin} login={login} setLogin={setLogin} />
           }
